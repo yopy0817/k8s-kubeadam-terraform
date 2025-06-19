@@ -81,6 +81,11 @@ resource "aws_instance" "master" {
   security_groups = [aws_security_group.k8s_sg.id]
   associate_public_ip_address = true
 
+  metadata_options {
+    http_endpoint = "enabled"
+    http_tokens   = "optional"
+  }
+
   tags = {
     Name = "k8s-master"
   }
@@ -94,6 +99,11 @@ resource "aws_instance" "worker" {
   key_name      = var.key_name
   security_groups = [aws_security_group.k8s_sg.id]
   associate_public_ip_address = true
+
+  metadata_options {
+    http_endpoint = "enabled"
+    http_tokens   = "optional"
+  }
  
   tags = {
     Name = "k8s-worker-${count.index + 1}"
